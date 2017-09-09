@@ -2,9 +2,21 @@ var app = angular.module('alunos', ['ngResource']);
 
 app.controller('AlunosController', function($scope, AlunosResource) {
 	
+	$scope.listarPaginado = function(pageable, index) {
+		filter = {};
+		filter.page = index;
+		filter.limit = pageable.size;
+		filter.sort = pageable.sort.property;
+		filter.direction = pageable.sort.direction;
+		
+		AlunosResource.query(filter, function(data){
+			$scope.alunosPage = data;
+		});
+	};
+	
 	$scope.listar = function() {
 		AlunosResource.query(function(data){
-			$scope.alunos = data;
+			$scope.alunosPage = data;
 		});
 	};
 	
@@ -27,13 +39,24 @@ app.controller('AlunosController', function($scope, AlunosResource) {
 		});
 	};
 	
+	$scope.range = function(n) {
+        return new Array(n);
+    };
+    
 	$scope.listar();
 });
 
 app.factory('AlunosResource', function($resource){
 	return $resource("/api/alunos/:codigo",
-				{codigo: "@codigo"},
-				{'update': {method: 'PUT'}
+			{codigo: "@codigo"}, {
+			'update': {method: 'PUT'},
+			'query': {
+				method: 'GET',
+				isArray: false,
+			    transformResponse: function(response) {
+			        return angular.fromJson(response);
+			    }		
+			 }
 			});
 });
 

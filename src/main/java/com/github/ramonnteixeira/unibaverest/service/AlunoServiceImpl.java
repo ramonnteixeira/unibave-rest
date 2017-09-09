@@ -1,13 +1,11 @@
 package com.github.ramonnteixeira.unibaverest.service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.github.ramonnteixeira.unibaverest.model.Aluno;
@@ -20,11 +18,12 @@ public class AlunoServiceImpl implements AlunoService {
     private AlunoRepository repository;
     
     @Override
-    public List<Aluno> lista(String nome) {
-        return nome != null ? 
-                repository.findByNomeContaining(nome) : 
-                StreamSupport.stream(repository.findAll().spliterator(), false)
-                  .collect(Collectors.toList());
+    public Page<Aluno> lista(Pageable pageable, String nome) {
+        if (nome == null) {
+            return repository.findAll(pageable);
+        }
+        
+        return repository.findByNomeContaining(pageable, nome); 
     }
 
     @Override

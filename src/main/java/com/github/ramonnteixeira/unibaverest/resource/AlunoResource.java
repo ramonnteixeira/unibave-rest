@@ -3,6 +3,7 @@ package com.github.ramonnteixeira.unibaverest.resource;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -21,7 +22,11 @@ import com.github.ramonnteixeira.unibaverest.model.Aluno;
 public interface AlunoResource {
 
 	@GET
-	Response lista(@QueryParam("nome") final String nome);
+	Response lista(@QueryParam("nome") final String nome, 
+	        @QueryParam("page") @DefaultValue("0") final int page,
+	        @QueryParam("limit") @DefaultValue("10") final int limit,
+	        @QueryParam("sort") @DefaultValue("codigo") final String sort,
+	        @QueryParam("direction") @DefaultValue("asc") final String direction);
 
 	@POST
 	Response adiciona(@Valid final Aluno aluno);

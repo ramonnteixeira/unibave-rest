@@ -3,7 +3,13 @@
 <head>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.6/angular.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.6/angular-resource.min.js"></script>
-    <script type="text/javascript" src="alunos.js"></script>    
+    <script type="text/javascript" src="alunos.js"></script>  
+    
+    <style type="text/css">
+        #ul_navigate li{
+            display: inline;
+        }    
+    </style>  
 </head>
 <body ng-controller="AlunosController">
     <h2>Cadastro de Alunos</h2>
@@ -15,7 +21,7 @@
           <th></th>
           <th></th>
         </tr>
-        <tr ng-repeat="aluno in alunos">
+        <tr ng-repeat="aluno in alunosPage.content">
           <td><input type="text" ng-model="aluno.codigo" readonly="readonly"/></td>
           <td><input type="text" ng-model="aluno.nome"/></td>
           <td><input type="text" ng-model="aluno.cidade"/></td>
@@ -30,5 +36,18 @@
           <td></td>
         </tr>
     </table>
+    <div id="div_navigate">
+        <ul id="ul_navigate">
+            <li ng-if="!alunosPage.first">
+              <a href="#" ng-click="listarPaginado(alunosPage, 0)">&lt;</a>
+            </li>
+            <li ng-repeat="a in range(alunosPage.totalPages) track by $index">
+              <a href="#" ng-click="listarPaginado(alunosPage, $index)">{{$index+1}}</a>
+            </li>
+            <li ng-if="!alunosPage.last">
+              <a href="#" ng-click="listarPaginado(alunosPage, alunosPage.totalPages-1)">&gt;</a>
+            </li>
+        </ul>
+    </div>
 </body>
 </html>
