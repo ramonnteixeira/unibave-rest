@@ -21,17 +21,12 @@ public class WebApplicationExceptionMapper implements ExceptionMapper<WebApplica
     
     @Override
     public Response toResponse(WebApplicationException e) {
-        Map<String, Object> message = new HashMap<>();
-        message.put("message", "Objeto não encontrado");
-        
+        Map<String, Object> error = new HashMap<>();
+        error.put("message", "Objecto não encontrado");
         if (env.acceptsProfiles("dev")) {
-            message.put("developMessage", e.getMessage());
+            error.put("developerMessage", e.getMessage());
         }
-        
-        return Response
-                  .fromResponse(e.getResponse())
-                  .entity(message)
-                  .build();
+        return Response.fromResponse(e.getResponse()).entity(error).build();
     }
 
 }
