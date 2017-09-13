@@ -1,10 +1,11 @@
-var app = angular.module('alunos', ['ngResource']);
+var app = angular.module('alunos', ['ngResource', 'ui.bootstrap']);
 
 app.controller('AlunosController', function($scope, AlunosResource) {
 	
-	$scope.listarPaginado = function(pageable, index) {
-		filter = {};
-		filter.page = index;
+	$scope.listar = function() {
+		var pageable = $scope.alunosPage;
+		var filter = {};
+		filter.page = $scope.currentPage-1;
 		filter.limit = pageable.size;
 		filter.sort = pageable.sort.property;
 		filter.direction = pageable.sort.direction;
@@ -13,13 +14,7 @@ app.controller('AlunosController', function($scope, AlunosResource) {
 			$scope.alunosPage = data;
 		});
 	};
-	
-	$scope.listar = function() {
-		AlunosResource.query(function(data){
-			$scope.alunosPage = data;
-		});
-	};
-	
+
 	$scope.adicionar = function(aluno) {
 		new AlunosResource(aluno).$save().then(function(data){
 			$scope.novoAluno = {};
@@ -42,7 +37,9 @@ app.controller('AlunosController', function($scope, AlunosResource) {
 	$scope.range = function(n) {
         return new Array(n);
     };
-    
+
+    $scope.alunosPage = {size: 10, sort: {property: 'codigo', direction: 'ASC'}};
+    $scope.currentPage = 1;
 	$scope.listar();
 });
 
