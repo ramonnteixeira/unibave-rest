@@ -23,7 +23,7 @@ app.controller('AlunosController', function($scope, AlunosResource) {
 	};
 	
 	$scope.atualizar = function(aluno) {
-		aluno.$update().then(function(data){
+        new AlunosResource(aluno).$update().then(function(data){
 			$scope.listar();
 		});
 	};
