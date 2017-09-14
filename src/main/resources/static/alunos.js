@@ -13,6 +13,8 @@ app.controller('AlunosController', function($scope, AlunosResource) {
 		AlunosResource.query(filter, function(data){
 			$scope.alunosPage = data;
 		});
+		
+		document.getElementById("nomeAluno").focus();
 	};
 
 	$scope.adicionar = function(aluno) {

@@ -1,6 +1,7 @@
 <!doctype html>
 <html ng-app="alunos">
 <head>
+    <meta charset="UTF-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
@@ -17,27 +18,27 @@
         <ul uib-pagination total-items="alunosPage.totalElements" ng-model="currentPage" max-size="alunosPage.size"
             class="pagination-sm" boundary-links="true" rotate="false"
             ng-change="listar()"></ul>
-        <table class="table table-striped">
+        <table class="table">
             <tr>
               <th>Código</th>
               <th>Nome</th>
               <th>Cidade</th>
-              <th></th>
               <th></th>
             </tr>
             <tr ng-repeat="aluno in alunosPage.content">
               <td><input type="text" ng-model="aluno.codigo" readonly="readonly"/></td>
               <td><input type="text" ng-model="aluno.nome"/></td>
               <td><input type="text" ng-model="aluno.cidade"/></td>
-              <td><input type="button" value="atualizar" ng-click="atualizar(aluno)" /></td>
-              <td><input type="button" value="excluir" ng-click="excluir(aluno)" /></td>
+              <td>
+                  <button class="btn btn-primary glyphicon glyphicon-ok-sign" ng-click="atualizar(aluno)"></button>
+                  <button class="btn btn-danger glyphicon glyphicon-remove-sign" ng-click="excluir(aluno)"></button>
+              </td>
             </tr>
             <tr>
               <td></td>
-              <td><input type="text" ng-model="novoAluno.nome"/></td>
-              <td><input type="text" ng-model="novoAluno.cidade"/></td>
-              <td><input type="button" value="Incluir" ng-click="adicionar(novoAluno)" /></td>
-              <td></td>
+              <td><input id="nomeAluno" type="text" ng-model="novoAluno.nome"/></td>
+              <td><input id="cidadeAluno" type="text" ng-model="novoAluno.cidade"/></td>
+              <td><button class="btn btn-success" ng-click="adicionar(novoAluno)">Incluir</button></td>
             </tr>
         </table>
     </div>
