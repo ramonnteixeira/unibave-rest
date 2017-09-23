@@ -2,9 +2,9 @@ package com.github.ramonnteixeira.unibaverest.dto;
 
 import com.github.ramonnteixeira.unibaverest.model.Aluno;
 
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 public class AlunoDTO {
 
     private Long codigo;
